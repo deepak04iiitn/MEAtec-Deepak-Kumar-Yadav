@@ -98,14 +98,12 @@ npm run prisma:generate
 npm run prisma:push
 ```
 
-### 5. (Optional) Frontend Environment Variables
+### 5. Frontend Environment Variables
 
 Create a `.env` file in the `frontend` directory (optional):
 ```env
 VITE_API_URL=http://localhost:5000/api
 ```
-
-If not provided, it defaults to `http://localhost:5000/api`.
 
 ## 🏃 How to Run the Application
 
@@ -113,7 +111,7 @@ If not provided, it defaults to `http://localhost:5000/api`.
 
 **Terminal 1 - Start Backend Server:**
 ```bash
-npm run dev
+npm start
 ```
 The backend server will run on `http://localhost:5000`
 
