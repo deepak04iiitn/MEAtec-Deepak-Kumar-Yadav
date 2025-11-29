@@ -1,92 +1,102 @@
-import {createSlice} from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { register, login } from '../../services/authService';
+
+// Async thunks
+export const registerUser = createAsyncThunk(
+  'user/register',
+  async (userData, { rejectWithValue }) => {
+    try {
+      const response = await register(userData);
+      // Store token in localStorage
+      if (response.data?.token) {
+        localStorage.setItem('token', response.data.token);
+      }
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || 'Registration failed'
+      );
+    }
+  }
+);
+
+export const loginUser = createAsyncThunk(
+  'user/login',
+  async (userData, { rejectWithValue }) => {
+    try {
+      const response = await login(userData);
+      // Store token in localStorage
+      if (response.data?.token) {
+        localStorage.setItem('token', response.data.token);
+      }
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(
+        error.response?.data?.message || 'Login failed'
+      );
+    }
+  }
+);
 
 const initialState = {
-    currentUser: null,
-    error: null,
-    loading: false,
-    sessionExpiry: null, // epoch ms when session should auto-expire
-}
+  currentUser: null,
+  token: null,
+  error: null,
+  loading: false,
+};
 
 const userSlice = createSlice({
-    name : 'user',
-    initialState,
-    reducers : {                               // // here we add the logics for the functionalities we want
-        signInStart : (state) => {
-            state.loading = true;
-            state.error = null;
-        },
-        signInSuccess: (state, action) => {
-            state.currentUser = action.payload; // user data is payload
-            state.loading = false;
-            state.error = null;
-            // Set 14 days expiry from now
-            state.sessionExpiry = Date.now() + 14 * 24 * 60 * 60 * 1000;
-        },
-        signInFailure : (state , action) => {
-            state.loading = false;
-            state.error = action.payload;
-        },
-        signUpStart : (state) => {
-            state.loading = true;
-            state.error = null;
-        },
-        signUpSuccess: (state, action) => {
-            state.currentUser = action.payload; // user data is payload for automatic login
-            state.loading = false;
-            state.error = null;
-            // Set 14 days expiry from now
-            state.sessionExpiry = Date.now() + 14 * 24 * 60 * 60 * 1000;
-        },
-        signUpFailure : (state , action) => {
-            state.loading = false;
-            state.error = action.payload;
-        },
-        updateStart : (state) => {
-            state.loading = true;
-            state.error = null;
-        },
-        updateSuccess: (state, action) => {
-            state.currentUser = action.payload; // user data is payload
-            state.loading = false;
-            state.error = null;
-        },
-        updateFailure : (state , action) => {
-            state.loading = false;
-            state.error = action.payload;
-        },
-        deleteUserStart : (state) => {
-            state.loading = true;
-            state.error = null;
-        },
-        deleteUserSuccess: (state) => {
-            state.currentUser = null; // removing the person
-            state.loading = false;
-            state.error = null;
-            state.sessionExpiry = null;
-        },
-        deleteUserFailure : (state , action) => {
-            state.loading = false;
-            state.error = action.payload;
-        },
-        signoutSuccess: (state) => {
-            state.currentUser = null;
-            state.error = null;
-            state.loading = false;
-            state.sessionExpiry = null;
-        },
-        // In case we need to initialize expiry when missing (e.g., after upgrade)
-        initializeSessionExpiry: (state) => {
-            if (state.currentUser && !state.sessionExpiry) {
-                state.sessionExpiry = Date.now() + 14 * 24 * 60 * 60 * 1000;
-            }
-        }
-    }
+  name: 'user',
+  initialState,
+  reducers: {
+    signOut: (state) => {
+      state.currentUser = null;
+      state.token = null;
+      state.error = null;
+      localStorage.removeItem('token');
+    },
+    clearError: (state) => {
+      state.error = null;
+    },
+    setUser: (state, action) => {
+      state.currentUser = action.payload.user;
+      state.token = action.payload.token;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      // Register
+      .addCase(registerUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(registerUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.currentUser = action.payload.user;
+        state.token = action.payload.token;
+        state.error = null;
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      // Login
+      .addCase(loginUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.currentUser = action.payload.user;
+        state.token = action.payload.token;
+        state.error = null;
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      });
+  },
 });
 
-export const { signInFailure , signInStart , signInSuccess , 
-    signUpStart, signUpSuccess, signUpFailure,
-    updateStart , updateSuccess , updateFailure , 
-    deleteUserStart , deleteUserSuccess , deleteUserFailure , signoutSuccess, initializeSessionExpiry
- } = userSlice.actions;
-
+export const { signOut, clearError, setUser } = userSlice.actions;
 export default userSlice.reducer;
