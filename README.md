@@ -205,7 +205,7 @@ All task endpoints require authentication. Include the JWT token in the Authoriz
 Authorization: Bearer <your_jwt_token>
 ```
 
-#### GET `/api/tasks`
+#### GET `/api/tasks/list`
 Get all tasks for the authenticated user.
 
 **Headers:**
@@ -232,7 +232,7 @@ Authorization: Bearer <token>
 }
 ```
 
-#### POST `/api/tasks`
+#### POST `/api/tasks/create`
 Create a new task.
 
 **Headers:**
@@ -273,7 +273,7 @@ Authorization: Bearer <token>
 - `description`: Optional, maximum 1000 characters
 - `status`: Must be either "pending" or "completed" (defaults to "pending")
 
-#### PUT `/api/tasks/:id`
+#### PUT `/api/tasks/update/:id`
 Update an existing task.
 
 **Headers:**
@@ -307,7 +307,7 @@ Authorization: Bearer <token>
 }
 ```
 
-#### DELETE `/api/tasks/:id`
+#### DELETE `/api/tasks/delete/:id`
 Delete a task.
 
 **Headers:**

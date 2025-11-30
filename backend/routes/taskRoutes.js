@@ -14,10 +14,10 @@ const router = express.Router();
 // All task routes should require authentication
 router.use(authenticate);
 
-router.get('/', getTasks);
-router.post('/', validate(createTaskSchema), createTask);
-router.put('/:id', validate(updateTaskSchema), updateTask);
-router.delete('/:id', deleteTask);
+router.get('/list', getTasks);
+router.post('/create', validate(createTaskSchema), createTask);
+router.put('/update/:id', validate(updateTaskSchema), updateTask);
+router.delete('/delete/:id', deleteTask);
 
 export default router;
 
