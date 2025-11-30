@@ -231,8 +231,6 @@ frontend/src/__tests__/
 └── validationSchemas.test.js
 ```
 
-For more detailed testing information, see [TESTING.md](./TESTING.md).
-
 ## 📚 API Endpoint Documentation
 
 Base URL: `http://localhost:5000/api`
