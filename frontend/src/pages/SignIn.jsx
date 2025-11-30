@@ -5,7 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser, clearError } from '../redux/user/userSlice';
 import { loginSchema } from '../utils/validationSchemas';
-import { LogIn, Loader2, Mail, Lock, ArrowRight, CheckSquare2 } from 'lucide-react';
+import { LogIn, Loader2, User, Lock, ArrowRight, CheckSquare2 } from 'lucide-react';
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -53,22 +53,22 @@ export default function SignIn() {
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-gray-200/50 p-8">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
 
-            {/* Email Field */}
+            {/* Username Field */}
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
-                Email Address
+                Username
               </label>
               <div className="relative">
-                <Mail className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+                <User className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
-                  type="email"
-                  {...register('email')}
+                  type="text"
+                  {...register('username')}
                   className="w-full pl-12 pr-4 py-3.5 bg-gray-50 border-2 border-gray-200 rounded-xl focus:border-indigo-500 focus:bg-white focus:ring-4 focus:ring-indigo-500/10 transition-all outline-none text-gray-900"
-                  placeholder="you@example.com"
+                  placeholder="Enter your username"
                 />
               </div>
-              {errors.email && (
-                <p className="mt-2 text-sm text-red-600">{errors.email.message}</p>
+              {errors.username && (
+                <p className="mt-2 text-sm text-red-600">{errors.username.message}</p>
               )}
             </div>
 
