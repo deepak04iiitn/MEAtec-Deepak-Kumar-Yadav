@@ -134,6 +134,105 @@ npm run build
 npm start
 ```
 
+## 🧪 How to Run Tests and View Coverage
+
+The project uses **Jest** as the testing framework for both frontend and backend. Tests are organized to cover controllers, middleware, routes, components, and validation schemas.
+
+### Run All Tests
+
+Run both backend and frontend tests:
+```bash
+npm test
+```
+
+### Backend Tests
+
+#### Run all backend tests:
+```bash
+npm run test:backend
+```
+
+#### Run backend tests in watch mode:
+```bash
+npm run test:backend:watch
+```
+
+#### Run backend tests with coverage:
+```bash
+npm run test:backend:coverage
+```
+
+**Backend Coverage Reports:**
+- HTML Report: Open `backend/coverage/lcov-report/index.html` in your browser
+- Terminal Output: Coverage summary is displayed after running tests
+- LCOV Report: Available at `backend/coverage/lcov.info`
+
+**Backend Test Coverage:**
+- Auth Controller: Registration and login functionality
+- Task Controller: CRUD operations (Create, Read, Update, Delete)
+- Auth Middleware: Token verification and authentication
+- Integration Tests: Route-level testing
+
+### Frontend Tests
+
+#### Run all frontend tests:
+```bash
+npm run test:frontend
+```
+
+#### Run frontend tests in watch mode:
+```bash
+npm run test:frontend:watch
+```
+
+#### Run frontend tests with coverage:
+```bash
+npm run test:frontend:coverage
+```
+
+**Frontend Coverage Reports:**
+- HTML Report: Open `frontend/coverage/lcov-report/index.html` in your browser
+- Terminal Output: Coverage summary is displayed after running tests
+- LCOV Report: Available at `frontend/coverage/lcov.info`
+
+**Frontend Test Coverage:**
+- Component Tests: SignIn, SignUp, TaskModal, TaskCard, Header
+- Form Validation: Client-side validation schemas
+- UI Behavior: Component rendering and user interactions
+
+### Coverage Thresholds
+
+Both frontend and backend have coverage thresholds set to **70%** for:
+- Branches
+- Functions
+- Lines
+- Statements
+
+### Test Structure
+
+**Backend Tests:**
+```
+backend/__tests__/
+├── authController.test.js
+├── taskController.test.js
+├── auth.middleware.test.js
+├── authRoutes.integration.test.js
+└── taskRoutes.integration.test.js
+```
+
+**Frontend Tests:**
+```
+frontend/src/__tests__/
+├── SignIn.test.jsx
+├── SignUp.test.jsx
+├── TaskModal.test.jsx
+├── TaskCard.test.jsx
+├── Header.test.jsx
+└── validationSchemas.test.js
+```
+
+For more detailed testing information, see [TESTING.md](./TESTING.md).
+
 ## 📚 API Endpoint Documentation
 
 Base URL: `http://localhost:5000/api`
