@@ -1,5 +1,4 @@
-import { CheckCircle2, Circle, Edit2, Trash2, Calendar, MoreVertical } from 'lucide-react';
-import { format } from 'date-fns';
+import { CheckCircle2, Circle, Edit2, Trash2, MoreVertical } from 'lucide-react';
 import { useState } from 'react';
 
 export default function TaskCard({ task, onEdit, onDelete, viewMode = 'grid' }) {
@@ -32,13 +31,6 @@ export default function TaskCard({ task, onEdit, onDelete, viewMode = 'grid' }) 
               <p className="text-sm text-gray-600 truncate">{task.description}</p>
             )}
           </div>
-
-          {task.dueDate && (
-            <div className="flex items-center gap-1.5 text-sm text-gray-500 bg-gray-100 px-3 py-1.5 rounded-lg">
-              <Calendar className="w-4 h-4" />
-              {format(new Date(task.dueDate), 'MMM dd')}
-            </div>
-          )}
 
           <div className="flex items-center gap-2">
             <button
@@ -126,16 +118,7 @@ export default function TaskCard({ task, onEdit, onDelete, viewMode = 'grid' }) 
       </div>
 
       {/* Footer */}
-      <div className="flex items-center justify-between pt-4 border-t border-gray-200">
-        {task.dueDate ? (
-          <div className="flex items-center gap-2 text-sm text-gray-600">
-            <Calendar className="w-4 h-4" />
-            {format(new Date(task.dueDate), 'MMM dd, yyyy')}
-          </div>
-        ) : (
-          <div className="text-sm text-gray-400">No due date</div>
-        )}
-
+      <div className="flex items-center justify-end pt-4 border-t border-gray-200">
         <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
           isCompleted 
             ? 'bg-emerald-100 text-emerald-700' 
